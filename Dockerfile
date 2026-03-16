@@ -22,10 +22,14 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 COPY package*.json ./
 
-ENV NODE_ENV=production
+# Install all deps (including devDeps for tsc build)
 RUN npm ci --ignore-scripts
-COPY . .
-RUN npm run build
 
+COPY . .
+
+# Build TypeScript
+RUN ./node_modules/.bin/tsc
+
+ENV NODE_ENV=production
 EXPOSE 8080
 CMD ["node", "dist/index.js"]
