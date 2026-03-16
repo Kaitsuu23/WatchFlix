@@ -1,4 +1,4 @@
-// ── Watch History ──
+﻿// ── Watch History ──
 const HISTORY_KEY = 'watchflix_history';
 function getHistory() {
   try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); } catch { return []; }
@@ -80,7 +80,7 @@ function makeHistoryCard(h, isContinue) {
   return card;
 }
 
-const API = 'http://localhost:8080';
+const API = '';
 
 // drama dropdown
 const dramaBtn  = document.getElementById('dramaBtn');

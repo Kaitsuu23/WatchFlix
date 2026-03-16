@@ -1,4 +1,4 @@
-const API = 'http://localhost:8080';
+﻿const API = '';
 
 // ── Watch History ──
 const HISTORY_KEY = 'watchflix_history';

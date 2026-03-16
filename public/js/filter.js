@@ -1,4 +1,4 @@
-const API = 'http://localhost:8080';
+﻿const API = '';
 const state = { sort: 'populer', type: 'movie', genre: '', country: '', year: '', page: 1 };
 
 const movieGrid = document.getElementById('movieGrid');

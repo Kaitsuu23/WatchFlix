@@ -1,4 +1,4 @@
-const API = 'http://localhost:8080';
+﻿const API = '';
 
 const searchInput  = document.getElementById('searchInput');
 const movieGrid    = document.getElementById('movieGrid');
