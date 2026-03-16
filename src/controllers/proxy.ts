@@ -59,7 +59,8 @@ async function fetchAndProxy(target: string, req: Request, res: Response) {
 
     const referer = req.headers['referer'] || '';
     const isInternalChain = referer.includes('/proxy?url=');
-    if (!isInternalChain && !ALLOWED_DOMAINS.some((d) => parsed.hostname === d || parsed.hostname.endsWith('.' + d))) {
+    const isXyzCdn = parsed.hostname.endsWith('.xyz');
+    if (!isInternalChain && !isXyzCdn && !ALLOWED_DOMAINS.some((d) => parsed.hostname === d || parsed.hostname.endsWith('.' + d))) {
         res.status(403).send('Domain not allowed');
         return;
     }
