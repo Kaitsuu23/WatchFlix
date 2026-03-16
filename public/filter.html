@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Filter — WatchFlix</title>
+  <link rel="icon" type="image/x-icon" href="/icon/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/icon/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/icon/favicon-16x16.png" />
+  <link rel="apple-touch-icon" href="/icon/apple-touch-icon.png" />
+  <link rel="manifest" href="/icon/site.webmanifest" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+  <div class="bg-blob blob-3"></div>
+
+  <nav class="navbar glass">
+    <a href="/" class="nav-brand"><img src="/icon/favicon-32x32.png" alt="WatchFlix" class="nav-logo" />Watch<span>Flix</span></a>
+    <div class="nav-links">
+      <button class="nav-btn" onclick="location.href='/'">Movies</button>
+      <div class="nav-dropdown">
+        <button class="nav-btn" id="dramaBtn">Drama ▾</button>
+        <div class="nav-dropdown-menu glass" id="dramaMenu">
+          <a class="dropdown-item" href="/drama/popular">Terpopuler</a>
+          <a class="dropdown-item" href="/drama/latest">Baru Diupload</a>
+          <a class="dropdown-item" href="/drama/ongoing">Ongoing</a>
+          <a class="dropdown-item" href="/drama/complete">Komplit</a>
+          <a class="dropdown-item" href="/drama/west">West Region</a>
+          <a class="dropdown-item" href="/drama/asian">Asian Region</a>
+          <a class="dropdown-item" href="/drama/rating">Rating</a>
+          <a class="dropdown-item" href="/drama/recent">Release</a>
+        </div>
+      </div>
+      <button class="nav-btn" onclick="location.href='/popular'">Popular</button>
+      <button class="nav-btn" onclick="location.href='/top-rated'">Top Rated</button>
+    </div>
+    <div class="nav-right">
+      <div class="search-wrap glass-input">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="searchInput" placeholder="Cari film atau series..."
+               onkeydown="if(event.key==='Enter'&&this.value.trim())location.href='/search/'+encodeURIComponent(this.value.trim())" />
+      </div>
+    </div>
+  </nav>
+
+  <!-- Filter trigger bar -->
+  <div class="fp-trigger-bar">
+    <div class="fp-breadcrumb">
+      <a href="/" class="fp-home">🏠</a>
+      <span class="fp-sep">/</span>
+      <span class="fp-current" id="fpBreadcrumb">Populer</span>
+    </div>
+    <div class="fp-dropdown-wrap">
+      <button class="fp-filter-btn" id="fpToggle">FILTER ▼</button>
+      <div class="fp-panel glass hidden" id="fpPanel">
+          <p class="fp-desc">Tampilkan daftar film sesuai dengan kesukaan anda.</p>
+
+          <div class="fp-select-group">
+            <select class="fp-select" id="fpSort">
+              <option value="populer">Populer</option>
+              <option value="latest">Terbaru</option>
+              <option value="rating">Top Rating</option>
+              <option value="release">Release</option>
+            </select>
+          </div>
+
+          <div class="fp-select-group">
+            <select class="fp-select" id="fpType">
+              <option value="movie">Movie</option>
+              <option value="series">Series</option>
+            </select>
+          </div>
+
+          <div class="fp-select-group">
+            <select class="fp-select" id="fpGenre">
+              <option value="">- Pilih Genre -</option>
+            </select>
+          </div>
+
+          <div class="fp-select-group">
+            <select class="fp-select" id="fpCountry">
+              <option value="">- Negara -</option>
+            </select>
+          </div>
+
+          <div class="fp-select-group">
+            <select class="fp-select" id="fpYear">
+              <option value="">- Tahun -</option>
+            </select>
+          </div>
+
+          <div class="fp-actions">
+            <button class="btn-primary" id="fpApply">Filter Movie</button>
+            <button class="btn-glass" id="fpCancel">Batal</button>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <!-- Page info -->
+  <div class="fp-page-info" id="fpPageInfo"></div>
+
+  <!-- Results -->
+  <main class="main-content">
+    <div class="movie-grid" id="movieGrid"></div>
+    <div class="loader-wrap hidden" id="loader"><div class="spinner"></div></div>
+    <div class="empty-state hidden" id="emptyState"><div class="empty-icon">🎬</div><p>Tidak ada hasil</p></div>
+    <div class="pagination" id="pagination">
+      <button class="btn-glass" id="prevBtn" disabled>← Prev</button>
+      <span class="page-info" id="pageInfo">Halaman 1</span>
+      <button class="btn-glass" id="nextBtn">Next →</button>
+    </div>
+  </main>
+
+  <script src="/js/filter.js"></script>
+
+  <footer class="site-footer">
+    <p>© 2026 <strong>WatchFlix</strong> by Kaitsuu23. All rights reserved.</p>
+  </footer>
+</body>
+</html>

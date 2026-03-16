@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Player — WatchFlix</title>
+  <link rel="icon" type="image/x-icon" href="/icon/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/icon/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/icon/favicon-16x16.png" />
+  <link rel="apple-touch-icon" href="/icon/apple-touch-icon.png" />
+  <link rel="manifest" href="/icon/site.webmanifest" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/player.css" />
+</head>
+<body>
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+  <div class="bg-blob blob-3"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar glass">
+    <a href="/" class="nav-brand"><img src="/icon/favicon-32x32.png" alt="WatchFlix" class="nav-logo" />Watch<span>Flix</span></a>
+    <div class="nav-links">
+      <button class="nav-btn" onclick="location.href='/'">Movies</button>
+      <div class="nav-dropdown">
+        <button class="nav-btn" id="dramaBtn">Drama ▾</button>
+        <div class="nav-dropdown-menu glass" id="dramaMenu">
+          <a class="dropdown-item" href="/drama/popular">Terpopuler</a>
+          <a class="dropdown-item" href="/drama/latest">Baru Diupload</a>
+          <a class="dropdown-item" href="/drama/ongoing">Ongoing</a>
+          <a class="dropdown-item" href="/drama/complete">Komplit</a>
+          <a class="dropdown-item" href="/drama/west">West Region</a>
+          <a class="dropdown-item" href="/drama/asian">Asian Region</a>
+          <a class="dropdown-item" href="/drama/rating">Rating</a>
+          <a class="dropdown-item" href="/drama/recent">Release</a>
+        </div>
+      </div>
+      <button class="nav-btn" onclick="location.href='/popular'">Popular</button>
+      <button class="nav-btn" onclick="location.href='/top-rated'">Top Rated</button>
+    </div>
+    <div class="nav-right">
+      <div class="search-wrap glass-input">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="searchInput" placeholder="Cari film atau series..."
+               onkeydown="if(event.key==='Enter'&&this.value.trim())location.href='/search/'+encodeURIComponent(this.value.trim())" />
+      </div>
+    </div>
+  </nav>
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <a href="/">Home</a>
+    <span>›</span>
+    <span id="breadcrumbType">Movie</span>
+    <span>›</span>
+    <span id="breadcrumbTitle">Loading...</span>
+  </div>
+
+  <!-- Player Layout -->
+  <div class="player-layout">
+
+    <!-- LEFT: Player + Info -->
+    <div class="player-main">
+
+      <!-- Player Box -->
+      <div class="player-box glass" id="playerBox">
+        <div class="player-thumbnail" id="playerThumbnail">
+          <img id="thumbnailImg" src="" alt="" />
+          <div class="thumbnail-overlay">
+            <div class="watch-cta">
+              <button class="play-btn-big" id="playBtnBig">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="48" height="48"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+              <p class="watch-hint">Klik untuk menonton</p>
+            </div>
+          </div>
+        </div>
+        <!-- proxied iframe — CSP stripped by backend -->
+        <iframe id="playerIframe" src="" frameborder="0"
+          allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+          allowfullscreen class="hidden" scrolling="no"></iframe>
+      </div>
+
+      <!-- Server Selector -->
+      <div class="server-bar glass">
+        <span class="server-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          GANTI PLAYER
+        </span>
+        <div class="server-list" id="serverList">
+          <div class="server-skeleton"></div>
+        </div>
+      </div>
+
+      <!-- Player Actions -->
+      <div class="player-actions glass">
+        <button class="action-btn" id="btnFullscreen">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+          Fullscreen
+        </button>
+        <button class="action-btn" id="btnTrailer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+          Trailer
+        </button>
+        <div class="action-spacer"></div>
+        <button class="action-btn" id="btnDownload">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download
+        </button>
+        <button class="action-btn" id="btnPopup">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Popup
+        </button>
+      </div>
+
+      <!-- Movie Info -->
+      <div class="movie-info-section glass" id="movieInfoSection">
+        <div class="info-loader"><div class="spinner"></div></div>
+      </div>
+
+      <!-- Episode List (series only) -->
+      <div class="episode-section glass hidden" id="episodeSection">
+        <div class="episode-header">
+          <h3>Episode</h3>
+          <select class="glass-select" id="seasonSelect"></select>
+        </div>
+        <div class="episode-grid" id="episodeGrid"></div>
+      </div>
+
+      <div class="download-section glass hidden" id="downloadSection">
+        <div class="download-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <h3>Download</h3>
+        </div>
+        <div class="download-list" id="downloadList">
+          <div class="spinner" style="margin:1rem auto"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: Related -->
+    <aside class="player-sidebar">
+      <div class="sidebar-header">MOVIE TERKAIT</div>
+      <div class="related-list" id="relatedList">
+        <div class="related-skeleton"></div>
+        <div class="related-skeleton"></div>
+        <div class="related-skeleton"></div>
+        <div class="related-skeleton"></div>
+        <div class="related-skeleton"></div>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- Trailer Modal -->
+  <div class="modal-overlay hidden" id="trailerModal">
+    <div class="trailer-modal glass">
+      <button class="modal-close" onclick="closeTrailer()">✕</button>
+      <iframe id="trailerIframe" src="" frameborder="0" allowfullscreen
+        allow="autoplay; fullscreen"></iframe>
+    </div>
+  </div>
+
+  <script src="/js/player.js"></script>
+  <script>
+    // Drama dropdown toggle
+    const dramaBtn = document.getElementById('dramaBtn');
+    const dramaMenu = document.getElementById('dramaMenu');
+    if (dramaBtn && dramaMenu) {
+      dramaBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        dramaMenu.classList.toggle('open');
+      });
+      document.addEventListener('click', () => dramaMenu.classList.remove('open'));
+    }
+  </script>
+
+  <footer class="site-footer">
+    <p>© 2026 <strong>WatchFlix</strong> by Kaitsuu23. All rights reserved.</p>
+  </footer>
+</body>
+</html>
